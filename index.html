@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pesquisas de Satisfação Sucesso RH</title>
+
+    <!-- Tailwind CSS from CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts (Substitutes for Adobe Fonts) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Chart.js for Dashboards -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0"></script>
+
+
+    <!-- Custom Styles & Theme -->
+    <style>
+        :root {
+            --azul-escuro: #1C4D96;
+            --azul-medio: #266EDB;
+            --azul-claro: #E9F0FD;
+            --cinza-texto: #4B5563;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--cinza-texto);
+            background-color: #f8fafc; /* bg-slate-50 */
+        }
+        h1, h2, h3, .font-title {
+            font-family: 'Poppins', sans-serif;
+            color: var(--azul-escuro);
+        }
+        .bg-azul-escuro { background-color: var(--azul-escuro); }
+        .bg-azul-medio { background-color: var(--azul-medio); }
+        .text-azul-escuro { color: var(--azul-escuro); }
+        .text-azul-medio { color: var(--azul-medio); }
+        .border-azul-medio { border-color: var(--azul-medio); }
+        .ring-azul-medio { --tw-ring-color: var(--azul-medio); }
+
+        /* Dynamic Aurora Gradient Background */
+        .animated-aurora-gradient {
+            background: linear-gradient(125deg, #1C4D96, #1E3A8A, #266EDB);
+            background-size: 400% 400%;
+            animation: gradient-flow 16s ease infinite;
+        }
+        @keyframes gradient-flow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Modal Popup Animation */
+        .modal-popup {
+            animation: popup 0.3s ease-out forwards;
+        }
+        @keyframes popup {
+            from { opacity: 0; transform: translateY(20px) scale(0.98); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        /* Custom Scrollbar */
+        .custom-scrollbar::-webkit-scrollbar { width: 8px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: #f1f5f9; }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background-color: #cbd5e1;
+            border-radius: 20px;
+            border: 3px solid #f1f5f9;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Global Error Banner -->
+    <div id="error-banner" class="hidden sticky top-0 left-0 right-0 bg-red-600 text-white text-center p-2 z-50">
+        <span id="error-banner-message"></span>
+        <button onclick="this.parentElement.classList.add('hidden')" class="absolute top-1/2 right-4 -translate-y-1/2 font-bold">X</button>
+    </div>
+
+    <!-- =================================================================== -->
+    <!-- ====                  PUBLIC VIEW (HERO & FORMS)                 ==== -->
+    <!-- =================================================================== -->
+    <div id="public-view" class="flex flex-col min-h-screen">
+        <!-- Hero Section -->
+        <header id="hero-section" class="animated-aurora-gradient relative flex-grow w-full flex flex-col items-center justify-center overflow-hidden text-white">
+            <!-- Admin Access Icon -->
+            <div class="absolute top-6 right-6 z-20">
+                <button id="open-admin-login-btn" class="p-2 rounded-full text-white/70 hover:text-white hover:bg-white/10 transition-colors" aria-label="Acessar painel do administrador">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 0 2l-.15.08a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l-.22-.38a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1 0-2l.15-.08a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
+                </button>
+            </div>
+            
+            <!-- Hero Content -->
+            <div id="hero-content" class="relative z-10 text-center p-6 transition-opacity duration-300">
+                <h1 class="text-4xl md:text-5xl font-bold text-white">Pesquisas de Satisfação Sucesso RH</h1>
+                <p class="text-lg md:text-xl text-white/80 mt-4 max-w-2xl mx-auto">Sua opinião constrói nosso futuro hoje e sempre!</p>
+                <div class="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
+                    <button data-modal="satisfaction-modal" class="open-modal-btn w-full sm:w-auto text-lg font-semibold bg-white text-azul-medio px-8 py-3 rounded-full shadow-lg transition-transform hover:scale-105">
+                        Pesquisa de Satisfação
+                    </button>
+                    <button data-modal="praise-modal" class="open-modal-btn w-full sm:w-auto text-lg font-semibold bg-white/20 border-2 border-white px-8 py-3 rounded-full backdrop-blur-sm transition-transform hover:scale-105">
+                        Elogiômetro
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Footer -->
+        <footer class="bg-azul-escuro text-white/80 py-6">
+            <div class="container mx-auto px-6 text-center">
+                <div class="flex flex-col items-center gap-3">
+                     <p class="text-base font-semibold text-white">Onde tem pessoas, tem Sucesso RH.</p>
+                     <a href="https://instagram.com/sucessorecursoshumanos" target="_blank" class="text-white/70 hover:text-white transition-colors" aria-label="Instagram">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                    </a>
+                </div>
+                <p class="text-xs text-white/50 mt-4">
+                    &copy; 2025 Sucesso RH. Todos os direitos reservados.
+                </p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- =================================================================== -->
+    <!-- ====                  ADMIN DASHBOARD VIEW                     ==== -->
+    <!-- =================================================================== -->
+    <div id="admin-dashboard" class="hidden min-h-screen bg-slate-100 p-4 sm:p-6 lg:p-8">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex flex-wrap justify-between items-center mb-6 gap-4">
+                <h1 class="text-3xl font-bold text-slate-800">Dashboard — Sucesso RH</h1>
+                <button id="logout-btn" class="font-semibold text-azul-medio hover:text-azul-escuro transition-colors">Sair</button>
+            </div>
+            
+            <!-- Filters -->
+            <div class="bg-white p-4 rounded-xl shadow-sm mb-6 flex flex-wrap gap-4 items-end">
+                <div>
+                    <label for="date-start" class="text-sm font-medium text-gray-600">Data Início</label>
+                    <input type="date" id="date-start" class="mt-1 block w-full px-3 py-2 bg-gray-50 border border-gray-300 rounded-lg focus:ring-2 focus:ring-azul-medio">
+                </div>
+                <div>
+                    <label for="date-end" class="text-sm font-medium text-gray-600">Data Fim</label>
+                    <input type="date" id="date-end" class="mt-1 block w-full px-3 py-2 bg-gray-50 border border-gray-300 rounded-lg focus:ring-2 focus:ring-azul-medio">
+                </div>
+                <button id="filter-btn" class="bg-azul-medio text-white px-4 py-2 rounded-lg font-semibold hover:bg-azul-escuro transition">Filtrar</button>
+                <button id="export-csv-btn" class="bg-gray-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-gray-800 transition">Exportar CSV</button>
+            </div>
+
+            <!-- Charts Section -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+                <div class="bg-white p-6 rounded-xl shadow-sm lg:col-span-2">
+                    <h3 class="font-bold text-lg text-slate-700 mb-4">Avaliação do Atendimento</h3>
+                    <div class="h-80"><canvas id="satisfaction-chart"></canvas></div>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm">
+                    <h3 class="font-bold text-lg text-slate-700 mb-4">Nível de Recomendação</h3>
+                    <div class="h-80"><canvas id="recommendation-chart"></canvas></div>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm lg:col-span-3">
+                    <h3 class="font-bold text-lg text-slate-700 mb-4">Serviços Mais Avaliados</h3>
+                    <div class="h-80"><canvas id="services-chart"></canvas></div>
+                </div>
+            </div>
+
+            <!-- Responses Table -->
+            <div class="bg-white p-6 rounded-xl shadow-sm mb-6">
+                <h3 class="font-bold text-lg text-slate-700 mb-4">Comentários e Sugestões</h3>
+                <input type="text" id="search-comments" placeholder="Buscar nos comentários..." class="mb-4 block w-full max-w-sm px-3 py-2 bg-gray-50 border border-gray-300 rounded-lg focus:ring-2 focus:ring-azul-medio">
+                <div class="h-96 overflow-y-auto custom-scrollbar">
+                    <table class="w-full text-sm text-left text-gray-500">
+                        <thead class="text-xs text-gray-700 uppercase bg-gray-50 sticky top-0">
+                            <tr>
+                                <th scope="col" class="px-6 py-3">Data</th>
+                                <th scope="col" class="px-6 py-3">Público</th>
+                                <th scope="col" class="px-6 py-3">Serviço</th>
+                                <th scope="col" class="px-6 py-3">Comentário</th>
+                            </tr>
+                        </thead>
+                        <tbody id="comments-table-body">
+                            <!-- Data will be inserted here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <!-- Praises List -->
+            <div class="bg-white p-6 rounded-xl shadow-sm">
+                <h3 class="font-bold text-lg text-slate-700 mb-4">Elogiômetro</h3>
+                 <input type="text" id="search-praises" placeholder="Buscar por colaborador..." class="mb-4 block w-full max-w-sm px-3 py-2 bg-gray-50 border border-gray-300 rounded-lg focus:ring-2 focus:ring-azul-medio">
+                <div id="praises-list" class="h-96 overflow-y-auto custom-scrollbar space-y-4 pr-2">
+                    <!-- Praises will be inserted here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- =================================================================== -->
+    <!-- ====                       MODALS & TOASTS                     ==== -->
+    <!-- =================================================================== -->
+
+    <!-- Satisfaction Form Modal -->
+    <div id="satisfaction-modal" class="hidden fixed inset-0 bg-black/60 flex items-center justify-center p-4 z-50">
+        <form id="satisfaction-form-element" class="modal-popup bg-white p-8 md:p-12 rounded-2xl shadow-xl border border-gray-100 space-y-8 w-full max-w-3xl max-h-[90vh] overflow-y-auto custom-scrollbar">
+            <div class="text-center">
+                <h2 class="text-3xl font-bold text-azul-escuro">Pesquisa de Satisfação</h2>
+                <p class="mt-2 text-gray-600 max-w-2xl mx-auto">Sua opinião é essencial! Com este formulário, queremos entender sua percepção e identificar oportunidades de melhoria.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <label for="satisfaction-name" class="font-semibold text-gray-700">Seu nome (opcional)</label>
+                    <input type="text" id="satisfaction-name" class="mt-1 block w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-lg focus:ring-2 focus:ring-azul-medio focus:border-azul-medio">
+                </div>
+                <div>
+                    <label for="relationship-type" class="font-semibold text-gray-700">Tipo de relação com o RH <span class="text-red-500">*</span></label>
+                    <select id="relationship-type" required class="mt-1 block w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-lg focus:ring-2 focus:ring-azul-medio focus:border-azul-medio">
+                        <option value="">Selecione...</option>
+                        <option>Colaborador Interno</option>
+                        <option>Candidato a Vaga</option>
+                        <option>Parceiro</option>
+                        <option>Cliente</option>
+                        <option>Visitante</option>
+                    </select>
+                </div>
+                <div class="md:col-span-2">
+                    <label for="service-used" class="font-semibold text-gray-700">Serviço/produto utilizado <span class="text-red-500">*</span></label>
+                    <select id="service-used" required class="mt-1 block w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-lg focus:ring-2 focus:ring-azul-medio focus:border-azul-medio">
+                        <option value="">Selecione...</option>
+                        <option>Atendimento Presencial</option>
+                        <option>Atendimento Online</option>
+                        <option>Processo Seletivo</option>
+                        <option>Consultoria</option>
+                        <option>Treinamento</option>
+                        <option>Evento</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="space-y-6">
+                <div>
+                    <p class="font-semibold text-gray-700">Avaliação do atendimento recebido <span class="text-red-500">*</span></p>
+                    <div class="mt-2 grid grid-cols-2 md:grid-cols-4 gap-3">
+                        <label class="flex items-center p-3 border border-gray-200 rounded-lg hover:bg-azul-claro cursor-pointer"><input type="radio" name="atendimento" value="Muito Satisfeito" required class="h-4 w-4 text-azul-medio focus:ring-azul-medio mr-3"><span class="text-sm text-gray-700">Muito Satisfeito</span></label>
+                        <label class="flex items-center p-3 border border-gray-200 rounded-lg hover:bg-azul-claro cursor-pointer"><input type="radio" name="atendimento" value="Satisfeito" class="h-4 w-4 text-azul-medio focus:ring-azul-medio mr-3"><span class="text-sm text-gray-700">Satisfeito</span></label>
+                        <label class="flex items-center p-3 border border-gray-200 rounded-lg hover:bg-azul-claro cursor-pointer"><input type="radio" name="atendimento" value="Pouco Satisfeito" class="h-4 w-4 text-azul-medio focus:ring-azul-medio mr-3"><span class="text-sm text-gray-700">Pouco Satisfeito</span></label>
+                        <label class="flex items-center p-3 border border-gray-200 rounded-lg hover:bg-azul-claro cursor-pointer"><input type="radio" name="atendimento" value="Insatisfeito" class="h-4 w-4 text-azul-medio focus:ring-azul-medio mr-3"><span class="text-sm text-gray-700">Insatisfeito</span></label>
+                    </div>
+                </div>
+                <div>
+                    <p class="font-semibold text-gray-700">O prazo de atendimento foi cumprido? <span class="text-red-500">*</span></p>
+                    <div class="mt-2 grid grid-cols-2 md:grid-cols-3 gap-3">
+                        <label class="flex items-center p-3 border border-gray-200 rounded-lg hover:bg-azul-claro cursor-pointer"><input type="radio" name="prazo" value="Sim" required class="h-4 w-4 text-azul-medio focus:ring-azul-medio mr-3"><span class="text-sm text-gray-700">Sim</span></label>
+                        <label class="flex items-center p-3 border border-gray-200 rounded-lg hover:bg-azul-claro cursor-pointer"><input type="radio" name="prazo" value="Parcialmente" class="h-4 w-4 text-azul-medio focus:ring-azul-medio mr-3"><span class="text-sm text-gray-700">Parcialmente</span></label>
+                        <label class="flex items-center p-3 border border-gray-200 rounded-lg hover:bg-azul-claro cursor-pointer"><input type="radio" name="prazo" value="Não" class="h-4 w-4 text-azul-medio focus:ring-azul-medio mr-3"><span class="text-sm text-gray-700">Não</span></label>
+                    </div>
+                </div>
+                <div>
+                    <p class="font-semibold text-gray-700">O atendimento atendeu às suas expectativas? <span class="text-red-500">*</span></p>
+                    <div class="mt-2 grid grid-cols-2 md:grid-cols-4 gap-3">
+                        <label class="flex items-center p-3 border border-gray-200 rounded-lg hover:bg-azul-claro cursor-pointer"><input type="radio" name="expectativas" value="Superou" required class="h-4 w-4 text-azul-medio focus:ring-azul-medio mr-3"><span class="text-sm text-gray-700">Superou</span></label>
+                        <label class="flex items-center p-3 border border-gray-200 rounded-lg hover:bg-azul-claro cursor-pointer"><input type="radio" name="expectativas" value="Atendeu Plenamente" class="h-4 w-4 text-azul-medio focus:ring-azul-medio mr-3"><span class="text-sm text-gray-700">Atendeu Plenamente</span></label>
+                        <label class="flex items-center p-3 border border-gray-200 rounded-lg hover:bg-azul-claro cursor-pointer"><input type="radio" name="expectativas" value="Atendeu Parcialmente" class="h-4 w-4 text-azul-medio focus:ring-azul-medio mr-3"><span class="text-sm text-gray-700">Atendeu Parcialmente</span></label>
+                        <label class="flex items-center p-3 border border-gray-200 rounded-lg hover:bg-azul-claro cursor-pointer"><input type="radio" name="expectativas" value="Não Atendeu" class="h-4 w-4 text-azul-medio focus:ring-azul-medio mr-3"><span class="text-sm text-gray-700">Não Atendeu</span></label>
+                    </div>
+                </div>
+                <div>
+                    <p class="font-semibold text-gray-700">Você recomendaria o Sucesso RH? <span class="text-red-500">*</span></p>
+                    <div class="mt-2 grid grid-cols-2 md:grid-cols-3 gap-3">
+                        <label class="flex items-center p-3 border border-gray-200 rounded-lg hover:bg-azul-claro cursor-pointer"><input type="radio" name="recomendaria" value="Sim" required class="h-4 w-4 text-azul-medio focus:ring-azul-medio mr-3"><span class="text-sm text-gray-700">Sim</span></label>
+                        <label class="flex items-center p-3 border border-gray-200 rounded-lg hover:bg-azul-claro cursor-pointer"><input type="radio" name="recomendaria" value="Talvez" class="h-4 w-4 text-azul-medio focus:ring-azul-medio mr-3"><span class="text-sm text-gray-700">Talvez</span></label>
+                        <label class="flex items-center p-3 border border-gray-200 rounded-lg hover:bg-azul-claro cursor-pointer"><input type="radio" name="recomendaria" value="Não" class="h-4 w-4 text-azul-medio focus:ring-azul-medio mr-3"><span class="text-sm text-gray-700">Não</span></label>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <label for="comments" class="font-semibold text-gray-700">Comentários ou sugestões</label>
+                <textarea id="comments" rows="4" class="mt-1 block w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-lg focus:ring-2 focus:ring-azul-medio focus:border-azul-medio"></textarea>
+            </div>
+            
+            <div class="flex justify-end gap-4 items-center pt-4 border-t border-gray-200">
+                <button type="button" class="close-modal-btn font-semibold text-gray-600 hover:text-gray-900">Cancelar</button>
+                <button type="submit" class="text-lg font-semibold bg-azul-medio text-white px-8 py-2 rounded-full shadow-lg transition-transform hover:scale-105 disabled:opacity-50 disabled:cursor-wait flex items-center justify-center gap-2">
+                    <span class="spinner hidden w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
+                    Enviar Avaliação
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Praise Form Modal -->
+    <div id="praise-modal" class="hidden fixed inset-0 bg-black/60 flex items-center justify-center p-4 z-50">
+        <form id="praise-form-element" class="modal-popup bg-white p-8 md:p-12 rounded-2xl shadow-xl border border-gray-100 space-y-8 w-full max-w-lg">
+            <div class="text-center">
+                <h2 class="text-3xl font-bold text-azul-escuro">Elogiômetro Sucesso RH</h2>
+                <p class="mt-2 text-gray-600">Valorize quem faz a diferença!</p>
+            </div>
+            
+            <div class="space-y-6">
+                <div>
+                    <label for="praise-author" class="font-semibold text-gray-700">Seu nome (opcional)</label>
+                    <input type="text" id="praise-author" class="mt-1 block w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-lg focus:ring-2 focus:ring-azul-medio focus:border-azul-medio">
+                </div>
+                <div>
+                    <label for="praise-recipient" class="font-semibold text-gray-700">Nome do colaborador elogiado <span class="text-red-500">*</span></label>
+                    <input type="text" id="praise-recipient" required class="mt-1 block w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-lg focus:ring-2 focus:ring-azul-medio focus:border-azul-medio">
+                </div>
+                <div>
+                    <label for="praise-message" class="font-semibold text-gray-700">Seu elogio <span class="text-red-500">*</span></label>
+                    <textarea id="praise-message" rows="5" required class="mt-1 block w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-lg focus:ring-2 focus:ring-azul-medio focus:border-azul-medio"></textarea>
+                </div>
+            </div>
+            
+            <div class="flex justify-end gap-4 items-center pt-4 border-t border-gray-200">
+                <button type="button" class="close-modal-btn font-semibold text-gray-600 hover:text-gray-900">Cancelar</button>
+                <button type="submit" class="text-lg font-semibold bg-azul-medio text-white px-8 py-2 rounded-full shadow-lg transition-transform hover:scale-105 disabled:opacity-50 disabled:cursor-wait flex items-center justify-center gap-2">
+                    <span class="spinner hidden w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
+                    Enviar Elogio
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Thank You Modal -->
+    <div id="thank-you-modal" class="hidden fixed inset-0 bg-black/60 flex items-center justify-center p-4 z-50">
+        <div class="modal-popup bg-white rounded-2xl shadow-2xl w-full max-w-md text-center p-8">
+            <div class="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-green-100 mb-5">
+                <svg class="h-8 w-8 text-green-600" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+            </div>
+            <h2 class="text-2xl font-bold text-slate-800">Obrigado!</h2>
+            <p id="thank-you-message" class="text-slate-600 mt-2 mb-6">Sua opinião foi enviada com sucesso.</p>
+            <button class="close-modal-btn w-full bg-azul-medio text-white font-bold px-6 py-3 rounded-lg hover:bg-azul-escuro transition-colors">Fechar</button>
+        </div>
+    </div>
+
+    <!-- Admin Login Modal -->
+    <div id="admin-login-modal" class="hidden fixed inset-0 bg-black/60 flex items-center justify-center p-4 z-50">
+        <form id="admin-login-form" class="modal-popup bg-white rounded-2xl shadow-2xl w-full max-w-sm">
+            <div class="p-8">
+                <h2 class="text-2xl font-bold text-center text-azul-escuro">Acesso Restrito</h2>
+                <p class="text-slate-500 text-center mt-2">Insira a senha de administrador.</p>
+                <div class="mt-6">
+                    <label for="admin-password" class="font-semibold text-slate-700 block mb-1">Senha</label>
+                    <input type="password" id="admin-password" required class="w-full p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-azul-medio focus:border-azul-medio">
+                    <p id="admin-error" class="text-red-500 text-sm mt-1 hidden">Senha incorreta.</p>
+                </div>
+                <div class="mt-6 flex items-center justify-end gap-4">
+                    <button type="button" class="close-modal-btn font-semibold text-slate-600 hover:text-slate-800">Cancelar</button>
+                    <button type="submit" class="bg-azul-medio text-white font-bold px-6 py-2 rounded-lg hover:bg-azul-escuro transition-colors">Entrar</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <!-- =================================================================== -->
+    <!-- ====                  JAVASCRIPT & FIREBASE                    ==== -->
+    <!-- =================================================================== -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getFirestore, collection, addDoc, onSnapshot, serverTimestamp, query, where, getDocs } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+
+        // =================================================
+        // === COLE SUAS CREDENCIAIS DO FIREBASE AQUI      ===
+        // =================================================
+        const firebaseConfig = {
+          apiKey: "AIzaSyATZaPXJjkxaJWfkYwYPc2e-FCWPyDZTGY",
+          authDomain: "sucessopesquisainterna.firebaseapp.com",
+          projectId: "sucessopesquisainterna",
+          storageBucket: "sucessopesquisainterna.firebasestorage.app",
+          messagingSenderId: "529452425687",
+          appId: "1:529452425687:web:c1af791aa6837f30f86b92",
+          measurementId: "G-8XGNJK7CJC"
+        };
+        
+        // --- DOM Elements ---
+        const publicView = document.getElementById('public-view');
+        const adminDashboard = document.getElementById('admin-dashboard');
+        
+        // Modals & Buttons
+        const thankYouModal = document.getElementById('thank-you-modal');
+        const adminLoginModal = document.getElementById('admin-login-modal');
+        const satisfactionModal = document.getElementById('satisfaction-modal');
+        const praiseModal = document.getElementById('praise-modal');
+        const adminLoginForm = document.getElementById('admin-login-form');
+        const satisfactionForm = document.getElementById('satisfaction-form-element');
+        const praiseForm = document.getElementById('praise-form-element');
+        const openAdminLoginBtn = document.getElementById('open-admin-login-btn');
+        const logoutBtn = document.getElementById('logout-btn');
+        const openModalBtns = document.querySelectorAll('.open-modal-btn');
+        const closeModalBtns = document.querySelectorAll('.close-modal-btn');
+
+        // Error Banner
+        const errorBanner = document.getElementById('error-banner');
+        const errorBannerMessage = document.getElementById('error-banner-message');
+
+        function showError(message) {
+            errorBannerMessage.textContent = message;
+            errorBanner.classList.remove('hidden');
+        }
+
+        // --- Firebase Initialization ---
+        const isConfigured = firebaseConfig.apiKey && firebaseConfig.apiKey !== "YOUR_API_KEY";
+        let db, auth;
+
+        if (!isConfigured) {
+            showError("CONFIGURAÇÃO NECESSÁRIA: Insira suas credenciais do Firebase no código para a aplicação funcionar.");
+        } else {
+            try {
+                const app = initializeApp(firebaseConfig);
+                db = getFirestore(app);
+                auth = getAuth(app);
+                signInAnonymously(auth).catch((error) => {
+                    console.error("Anonymous sign-in failed:", error);
+                    showError("Falha na autenticação. Verifique as regras de segurança do Firebase.");
+                });
+            } catch (e) {
+                console.error("Firebase initialization error:", e);
+                showError("Erro ao inicializar o Firebase. Verifique sua configuração.");
+            }
+        }
+        
+        // --- UI Logic & Modal Controls ---
+        const openModal = (modal) => modal.classList.remove('hidden');
+        const closeModal = (modal) => modal.classList.add('hidden');
+
+        openModalBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const modalId = btn.dataset.modal;
+                const modal = document.getElementById(modalId);
+                if (modal) openModal(modal);
+            });
+        });
+        
+        closeModalBtns.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const modal = e.target.closest('.fixed');
+                if(modal) closeModal(modal);
+            });
+        });
+
+        openAdminLoginBtn.addEventListener('click', () => openModal(adminLoginModal));
+        
+        // --- Form Submission ---
+        async function handleFormSubmission(form, collectionName, successMessage) {
+            if (!isConfigured) {
+                showError("O formulário não pode ser enviado sem a configuração do Firebase.");
+                return;
+            }
+
+            const submitBtn = form.querySelector('button[type="submit"]');
+            submitBtn.disabled = true;
+            submitBtn.querySelector('.spinner').classList.remove('hidden');
+
+            let formData = { createdAt: serverTimestamp() };
+            if (form.id === 'satisfaction-form-element') {
+                formData = {
+                    ...formData,
+                    nome: form.querySelector('#satisfaction-name').value.trim() || "Anônimo",
+                    tipo_relacao: form.querySelector('#relationship-type').value,
+                    servico_utilizado: form.querySelector('#service-used').value,
+                    avaliacao_atendimento: form.querySelector('input[name="atendimento"]:checked').value,
+                    prazo_atendimento: form.querySelector('input[name="prazo"]:checked').value,
+                    atendeu_expectativas: form.querySelector('input[name="expectativas"]:checked').value,
+                    recomendaria_rh: form.querySelector('input[name="recomendaria"]:checked').value,
+                    comentarios: form.querySelector('#comments').value.trim(),
+                };
+            } else {
+                formData = {
+                    ...formData,
+                    nome_elogiador: form.querySelector('#praise-author').value.trim() || "Anônimo",
+                    colaborador_elogiado: form.querySelector('#praise-recipient').value.trim(),
+                    mensagem: form.querySelector('#praise-message').value.trim(),
+                };
+            }
+
+            try {
+                await addDoc(collection(db, collectionName), formData);
+                closeModal(form.closest('.fixed'));
+                form.reset();
+                document.getElementById('thank-you-message').textContent = successMessage;
+                openModal(thankYouModal);
+            } catch (error) {
+                console.error(`Error adding document to ${collectionName}: `, error);
+                showError("Ocorreu um erro ao enviar sua resposta. Tente novamente.");
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.querySelector('.spinner').classList.add('hidden');
+            }
+        }
+
+        satisfactionForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            handleFormSubmission(satisfactionForm, 'pesquisa_satisfacao', 'Sua avaliação foi enviada com sucesso. Agradecemos sua contribuição!');
+        });
+
+        praiseForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            handleFormSubmission(praiseForm, 'elogios', 'Seu elogio foi enviado! Obrigado por reconhecer quem faz a diferença.');
+        });
+
+
+        // --- Admin Logic ---
+        let allSurveys = [];
+        let allPraises = [];
+        let chartInstances = {};
+
+        adminLoginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const password = document.getElementById('admin-password').value;
+            const errorMsg = document.getElementById('admin-error');
+            // IMPORTANT: Use Firebase Auth for real applications. This is for demonstration.
+            if (password === 'SucessoRH@2024') {
+                publicView.classList.add('hidden');
+                adminDashboard.classList.remove('hidden');
+                closeModal(adminLoginModal);
+                adminLoginForm.reset();
+                errorMsg.classList.add('hidden');
+                initializeDashboard();
+            } else {
+                errorMsg.classList.remove('hidden');
+            }
+        });
+
+        logoutBtn.addEventListener('click', () => {
+            publicView.classList.remove('hidden');
+            adminDashboard.classList.add('hidden');
+            Object.values(chartInstances).forEach(chart => chart.destroy());
+        });
+
+        function initializeDashboard() {
+            if (!isConfigured) return;
+            
+            // Listeners for real-time data
+            onSnapshot(collection(db, "pesquisa_satisfacao"), (snapshot) => {
+                allSurveys = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                updateDashboard(allSurveys, allPraises);
+            });
+            onSnapshot(collection(db, "elogios"), (snapshot) => {
+                allPraises = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                updateDashboard(allSurveys, allPraises);
+            });
+
+            // Filter and search listeners
+            document.getElementById('filter-btn').addEventListener('click', applyFilters);
+            document.getElementById('search-comments').addEventListener('input', (e) => updateDashboard(filterData(allSurveys, e.target.value), allPraises));
+            document.getElementById('search-praises').addEventListener('input', (e) => updateDashboard(allSurveys, filterData(allPraises, e.target.value, 'colaborador_elogiado')));
+            document.getElementById('export-csv-btn').addEventListener('click', () => exportToCSV(allSurveys));
+        }
+        
+        async function applyFilters() {
+            const startDate = document.getElementById('date-start').value;
+            const endDate = document.getElementById('date-end').value;
+
+            let surveysQuery = collection(db, "pesquisa_satisfacao");
+            if (startDate) surveysQuery = query(surveysQuery, where("createdAt", ">=", new Date(startDate)));
+            if (endDate) surveysQuery = query(surveysQuery, where("createdAt", "<=", new Date(endDate + 'T23:59:59')));
+
+            const surveySnapshot = await getDocs(surveysQuery);
+            const filteredSurveys = surveySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+            updateDashboard(filteredSurveys, allPraises); // For now, praises are not date-filtered
+        }
+
+        function filterData(data, searchTerm, key = 'comentarios') {
+            if (!searchTerm) return data;
+            return data.filter(item => item[key]?.toLowerCase().includes(searchTerm.toLowerCase()));
+        }
+
+        function updateDashboard(surveys, praises) {
+            if (adminDashboard.classList.contains('hidden')) return;
+
+            // Destroy old charts
+            Object.values(chartInstances).forEach(chart => chart.destroy());
+
+            // Render new charts
+            renderSatisfactionChart(surveys);
+            renderRecommendationChart(surveys);
+            renderServicesChart(surveys);
+            
+            // Render tables and lists
+            renderCommentsTable(surveys);
+            renderPraisesList(praises);
+        }
+
+        const createChart = (ctx, type, data, options) => new Chart(ctx, { type, data, options });
+
+        function renderSatisfactionChart(data) {
+            const ctx = document.getElementById('satisfaction-chart').getContext('2d');
+            const counts = data.reduce((acc, survey) => {
+                const key = survey.avaliacao_atendimento;
+                acc[key] = (acc[key] || 0) + 1;
+                return acc;
+            }, {});
+            const chartData = {
+                labels: ['Muito Satisfeito', 'Satisfeito', 'Pouco Satisfeito', 'Insatisfeito'],
+                datasets: [{
+                    label: 'Avaliações',
+                    data: [counts['Muito Satisfeito']||0, counts['Satisfeito']||0, counts['Pouco Satisfeito']||0, counts['Insatisfeito']||0],
+                    backgroundColor: ['#22C55E', '#84CC16', '#FBBF24', '#EF4444'],
+                    borderRadius: 8,
+                }]
+            };
+            chartInstances.satisfaction = createChart(ctx, 'bar', chartData, { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } });
+        }
+
+        function renderRecommendationChart(data) {
+            const ctx = document.getElementById('recommendation-chart').getContext('2d');
+            const counts = data.reduce((acc, survey) => {
+                const key = survey.recomendaria_rh;
+                acc[key] = (acc[key] || 0) + 1;
+                return acc;
+            }, {});
+            const chartData = {
+                labels: ['Sim', 'Talvez', 'Não'],
+                datasets: [{
+                    data: [counts['Sim']||0, counts['Talvez']||0, counts['Não']||0],
+                    backgroundColor: ['#22C55E', '#FBBF24', '#EF4444'],
+                    borderColor: '#fff',
+                    borderWidth: 2,
+                }]
+            };
+            chartInstances.recommendation = createChart(ctx, 'pie', chartData, { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom' } } });
+        }
+
+        function renderServicesChart(data) {
+            const ctx = document.getElementById('services-chart').getContext('2d');
+            const counts = data.reduce((acc, survey) => {
+                const key = survey.servico_utilizado;
+                acc[key] = (acc[key] || 0) + 1;
+                return acc;
+            }, {});
+            const chartData = {
+                labels: Object.keys(counts),
+                datasets: [{
+                    label: 'Nº de Avaliações',
+                    data: Object.values(counts),
+                    backgroundColor: '#266EDB',
+                    borderRadius: 8,
+                }]
+            };
+            chartInstances.services = createChart(ctx, 'bar', chartData, { indexAxis: 'y', responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } });
+        }
+        
+        function renderCommentsTable(surveys) {
+            const tbody = document.getElementById('comments-table-body');
+            tbody.innerHTML = surveys
+                .filter(s => s.comentarios)
+                .sort((a,b) => b.createdAt?.toMillis() - a.createdAt?.toMillis())
+                .map(s => `
+                <tr class="bg-white border-b">
+                    <td class="px-6 py-4">${s.createdAt ? s.createdAt.toDate().toLocaleDateString('pt-BR') : 'N/A'}</td>
+                    <td class="px-6 py-4">${s.tipo_relacao}</td>
+                    <td class="px-6 py-4">${s.servico_utilizado}</td>
+                    <td class="px-6 py-4">${s.comentarios}</td>
+                </tr>
+            `).join('');
+        }
+
+        function renderPraisesList(praises) {
+            const list = document.getElementById('praises-list');
+            list.innerHTML = praises
+                .sort((a,b) => b.createdAt?.toMillis() - a.createdAt?.toMillis())
+                .map(p => `
+                <div class="p-4 bg-amber-50 rounded-lg border border-amber-200">
+                    <p class="text-gray-800">"${p.mensagem}"</p>
+                    <div class="mt-2 text-sm text-right">
+                        <span class="font-semibold text-amber-800">Para: ${p.colaborador_elogiado}</span>
+                        <span class="text-gray-500"> | Por: ${p.nome_elogiador}</span>
+                    </div>
+                </div>
+            `).join('');
+            if (praises.length === 0) list.innerHTML = `<p class="text-center text-gray-500">Nenhum elogio encontrado.</p>`;
+        }
+        
+        function exportToCSV(data) {
+            const headers = "Data,Nome,Tipo Relação,Serviço,Avaliação Atendimento,Prazo Cumprido,Atendeu Expectativas,Recomendaria,Comentários";
+            const rows = data.map(s => [
+                s.createdAt ? s.createdAt.toDate().toISOString() : '',
+                `"${s.nome}"`,
+                `"${s.tipo_relacao}"`,
+                `"${s.servico_utilizado}"`,
+                `"${s.avaliacao_atendimento}"`,
+                `"${s.prazo_atendimento}"`,
+                `"${s.atendeu_expectativas}"`,
+                `"${s.recomendaria_rh}"`,
+                `"${s.comentarios.replace(/"/g, '""')}"`
+            ].join(','));
+            
+            const csvContent = "data:text/csv;charset=utf-8," + headers + "\n" + rows.join("\n");
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", "pesquisa_satisfacao_sucesso_rh.csv");
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+    </script>
+</body>
+</html>
