@@ -182,16 +182,19 @@
             <!-- Charts Section -->
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
                 <div class="bg-white p-6 rounded-xl shadow-sm lg:col-span-2">
-                    <h3 class="font-bold text-lg text-slate-700 mb-4">Avaliação do Atendimento</h3>
-                    <div class="h-80"><canvas id="satisfaction-chart"></canvas></div>
+                    <h3 class="font-bold text-lg text-slate-700 mb-4">Avaliação da Recepção</h3>
+                    <div class="h-80"><canvas id="reception-chart"></canvas></div>
                 </div>
                 <div class="bg-white p-6 rounded-xl shadow-sm">
-                    <h3 class="font-bold text-lg text-slate-700 mb-4">Nível de Recomendação</h3>
-                    <div class="h-80"><canvas id="recommendation-chart"></canvas></div>
+                    <h3 class="font-bold text-lg text-slate-700 mb-1">Nível de Recomendação (NPS)</h3>
+                    <div class="text-center mb-2">
+                        <span class="text-5xl font-bold text-azul-medio" id="nps-score-display">0</span>
+                    </div>
+                    <div class="h-60"><canvas id="nps-chart"></canvas></div>
                 </div>
                 <div class="bg-white p-6 rounded-xl shadow-sm lg:col-span-3">
-                    <h3 class="font-bold text-lg text-slate-700 mb-4">Serviços Mais Avaliados</h3>
-                    <div class="h-80"><canvas id="services-chart"></canvas></div>
+                    <h3 class="font-bold text-lg text-slate-700 mb-4">Pontuação Média por Setor</h3>
+                    <div class="h-80"><canvas id="department-avg-chart"></canvas></div>
                 </div>
             </div>
 
@@ -204,9 +207,8 @@
                         <thead class="text-xs text-gray-700 uppercase bg-gray-50 sticky top-0">
                             <tr>
                                 <th scope="col" class="px-6 py-3">Data</th>
-                                <th scope="col" class="px-6 py-3">Público</th>
-                                <th scope="col" class="px-6 py-3">Serviço</th>
-                                <th scope="col" class="px-6 py-3">Comentário</th>
+                                <th scope="col" class="px-6 py-3">O que mais gostou</th>
+                                <th scope="col" class="px-6 py-3">O que podemos melhorar</th>
                             </tr>
                         </thead>
                         <tbody id="comments-table-body">
@@ -619,10 +621,13 @@
 
 
         // --- Admin Logic ---
-        // NOTE: The dashboard charts will need to be updated to reflect the new data structure from the satisfaction form.
         let allSurveys = [];
         let allPraises = [];
-        let chartInstances = {};
+        let chartInstances = {
+            reception: null,
+            nps: null,
+            departmentAvg: null
+        };
 
         adminLoginForm.addEventListener('submit', (e) => {
             e.preventDefault();
@@ -643,7 +648,9 @@
         logoutBtn.addEventListener('click', () => {
             publicView.classList.remove('hidden');
             adminDashboard.classList.add('hidden');
-            Object.values(chartInstances).forEach(chart => chart.destroy());
+            Object.values(chartInstances).forEach(chart => {
+                if(chart) chart.destroy();
+            });
         });
 
         function initializeDashboard() {
@@ -677,23 +684,136 @@
             updateDashboard(filteredSurveys, allPraises);
         }
 
-        function filterData(data, searchTerm, key = 'comentarios') {
+        function filterData(data, searchTerm, key = 'gostou_mais') { // Default search key updated
             if (!searchTerm) return data;
-            return data.filter(item => item[key]?.toLowerCase().includes(searchTerm.toLowerCase()));
+            return data.filter(item => 
+                item[key]?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                item['melhorias']?.toLowerCase().includes(searchTerm.toLowerCase())
+            );
         }
 
         function updateDashboard(surveys, praises) {
             if (adminDashboard.classList.contains('hidden')) return;
-            Object.values(chartInstances).forEach(chart => chart.destroy());
-            // The following chart functions need to be updated to work with the new data structure
-            // renderSatisfactionChart(surveys); 
-            // renderRecommendationChart(surveys);
-            // renderServicesChart(surveys);
+            Object.values(chartInstances).forEach(chart => {
+                if(chart) chart.destroy();
+            });
+
+            renderReceptionChart(surveys); 
+            renderNpsChart(surveys);
+            renderDepartmentAvgChart(surveys);
             renderCommentsTable(surveys);
             renderPraisesList(praises);
         }
 
         const createChart = (ctx, type, data, options) => new Chart(ctx, { type, data, options });
+        
+        function renderReceptionChart(data) {
+            const ctx = document.getElementById('reception-chart').getContext('2d');
+            const questions = { cordialidade: 'Cordialidade', agilidade: 'Agilidade', clareza: 'Clareza' };
+            const options = ['Excelente', 'Bom', 'Regular', 'Ruim'];
+            const counts = {};
+            Object.keys(questions).forEach(q => {
+                counts[q] = { 'Excelente': 0, 'Bom': 0, 'Regular': 0, 'Ruim': 0 };
+            });
+
+            data.forEach(survey => {
+                if (survey.atendimento_recepcao) {
+                    Object.keys(questions).forEach(q => {
+                        const answer = survey.atendimento_recepcao[q];
+                        if (answer) { counts[q][answer]++; }
+                    });
+                }
+            });
+
+            const chartData = {
+                labels: Object.values(questions),
+                datasets: options.map((option, index) => ({
+                    label: option,
+                    data: Object.keys(questions).map(q => counts[q][option]),
+                    backgroundColor: ['#22C55E', '#84CC16', '#FBBF24', '#EF4444'][index],
+                    borderRadius: 4,
+                }))
+            };
+            chartInstances.reception = new Chart(ctx, {
+                type: 'bar', data: chartData,
+                options: { responsive: true, maintainAspectRatio: false, scales: { y: { beginAtZero: true } }, plugins: { legend: { position: 'bottom' } } }
+            });
+        }
+
+        function renderNpsChart(data) {
+            const ctx = document.getElementById('nps-chart').getContext('2d');
+            const npsScores = data.map(s => parseInt(s.nps, 10)).filter(s => !isNaN(s));
+            const total = npsScores.length;
+
+            if (total === 0) {
+                document.getElementById('nps-score-display').textContent = 'N/A';
+                if (chartInstances.nps) chartInstances.nps.destroy();
+                return;
+            }
+
+            const promoters = npsScores.filter(s => s >= 9).length;
+            const neutrals = npsScores.filter(s => s >= 7 && s <= 8).length;
+            const detractors = npsScores.filter(s => s <= 6).length;
+
+            const npsValue = Math.round(((promoters / total) - (detractors / total)) * 100);
+            document.getElementById('nps-score-display').textContent = npsValue;
+            
+            const chartData = {
+                labels: ['Promotores (9-10)', 'Neutros (7-8)', 'Detratores (0-6)'],
+                datasets: [{ data: [promoters, neutrals, detractors], backgroundColor: ['#22C55E', '#FBBF24', '#EF4444'], borderColor: '#fff', borderWidth: 2 }]
+            };
+            chartInstances.nps = new Chart(ctx, {
+                type: 'doughnut', data: chartData,
+                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom' }, datalabels: { color: '#fff', font: { weight: 'bold' } } } },
+                plugins: [ChartDataLabels]
+            });
+        }
+
+        function renderDepartmentAvgChart(data) {
+            const ctx = document.getElementById('department-avg-chart').getContext('2d');
+            const scoreMap = { 'Excelente': 4, 'Bom': 3, 'Regular': 2, 'Ruim': 1 };
+            const totals = { recepcao: { sum: 0, count: 0 }, rs: { sum: 0, count: 0 }, dp: { sum: 0, count: 0 } };
+
+            data.forEach(s => {
+                if (s.atendimento_recepcao) {
+                    Object.values(s.atendimento_recepcao).forEach(val => {
+                        if (scoreMap[val]) { totals.recepcao.sum += scoreMap[val]; totals.recepcao.count++; }
+                    });
+                }
+                if (s.atendimento_recrutamento) {
+                    Object.values(s.atendimento_recrutamento).forEach(val => {
+                        const score = parseInt(val, 10);
+                        if (!isNaN(score)) { totals.rs.sum += score; totals.rs.count++; }
+                    });
+                }
+                if (s.atendimento_dp) {
+                    Object.values(s.atendimento_dp).forEach(val => {
+                        const score = parseInt(val, 10);
+                        if (!isNaN(score)) { totals.dp.sum += score; totals.dp.count++; }
+                    });
+                }
+            });
+
+            const avg = {
+                recepcao: totals.recepcao.count > 0 ? (totals.recepcao.sum / totals.recepcao.count) : 0,
+                rs: totals.rs.count > 0 ? (totals.rs.sum / totals.rs.count) : 0,
+                dp: totals.dp.count > 0 ? (totals.dp.sum / totals.dp.count) : 0,
+            };
+
+            const chartData = {
+                labels: ['Recepção (Média 1-4)', 'R&S (Média 1-5)', 'DP (Média 1-5)'],
+                datasets: [{
+                    label: 'Pontuação Média',
+                    data: [avg.recepcao.toFixed(2), avg.rs.toFixed(2), avg.dp.toFixed(2)],
+                    backgroundColor: ['#3b82f6', '#10b981', '#f97316'],
+                    borderRadius: 4,
+                }]
+            };
+            chartInstances.departmentAvg = new Chart(ctx, {
+                type: 'bar', data: chartData,
+                options: { responsive: true, maintainAspectRatio: false, scales: { y: { beginAtZero: true, max: 5 } }, plugins: { legend: { display: false } } }
+            });
+        }
         
         function renderCommentsTable(surveys) {
             const tbody = document.getElementById('comments-table-body');
@@ -703,10 +823,13 @@
                 .map(s => `
                 <tr class="bg-white border-b">
                     <td class="px-6 py-4">${s.createdAt ? s.createdAt.toDate().toLocaleDateString('pt-BR') : 'N/A'}</td>
-                    <td class="px-6 py-4">${s.gostou_mais || 'N/A'}</td>
-                    <td class="px-6 py-4">${s.melhorias || 'N/A'}</td>
+                    <td class="px-6 py-4">${s.gostou_mais || 'Não preenchido'}</td>
+                    <td class="px-6 py-4">${s.melhorias || 'Não preenchido'}</td>
                 </tr>
             `).join('');
+            if (tbody.innerHTML === '') {
+                tbody.innerHTML = `<tr><td colspan="3" class="text-center py-4 text-gray-500">Nenhum comentário encontrado.</td></tr>`;
+            }
         }
 
         function renderPraisesList(praises) {
