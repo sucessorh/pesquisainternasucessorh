@@ -127,7 +127,7 @@
                 <img src="https://i.postimg.cc/hGJpz4hc/Design-sem-nome-1.png" alt="Logotipo Sucesso RH" class="h-20 w-auto mx-auto mb-8">
                 
                 <h1 class="text-4xl md:text-5xl font-bold text-white">Pesquisas de Satisfação Sucesso RH</h1>
-                <p class="text-lg md:text-xl text-white/80 mt-4 max-w-2xl mx-auto">Sua opinião constrói nosso futuro hoje e sempre!</p>
+                <p class="text-lg md:text-xl text-white/80 mt-4 max-w-2xl mx-auto">Com a sua opinião, moldamo um futuro de sucesso, juntos!</p>
                 <div class="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
                     <button data-modal="satisfaction-modal" class="open-modal-btn w-full sm:w-auto text-lg font-semibold bg-white text-azul-medio px-8 py-3 rounded-full shadow-lg transition-transform hover:scale-105">
                         Pesquisa de Satisfação
@@ -143,7 +143,7 @@
         <footer class="bg-azul-escuro text-white/80 py-6">
             <div class="container mx-auto px-6 text-center">
                 <div class="flex flex-col items-center gap-3">
-                     <p class="text-base font-semibold text-white">Onde tem pessoas, tem Sucesso RH.</p>
+                     <p class="text-base font-semibold text-white"></p>
                      <a href="https://instagram.com/sucessorecursoshumanos" target="_blank" class="text-white/70 hover:text-white transition-colors" aria-label="Instagram">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
                     </a>
@@ -258,21 +258,23 @@
                 <!-- Agilidade -->
                 <div>
                     <p class="font-medium text-gray-700 mb-2">Agilidade no atendimento <span class="text-red-500">*</span></p>
-                    <div class="flex flex-wrap gap-3">
-                        <label class="flex items-center"><input type="radio" name="recepcao_agilidade" value="Excelente" required class="h-4 w-4 text-azul-medio focus:ring-azul-medio mr-2"><span class="text-sm text-gray-700">Excelente</span></label>
-                        <label class="flex items-center"><input type="radio" name="recepcao_agilidade" value="Bom" class="h-4 w-4 text-azul-medio focus:ring-azul-medio mr-2"><span class="text-sm text-gray-700">Bom</span></label>
-                        <label class="flex items-center"><input type="radio" name="recepcao_agilidade" value="Regular" class="h-4 w-4 text-azul-medio focus:ring-azul-medio mr-2"><span class="text-sm text-gray-700">Regular</span></label>
-                        <label class="flex items-center"><input type="radio" name="recepcao_agilidade" value="Ruim" class="h-4 w-4 text-azul-medio focus:ring-azul-medio mr-2"><span class="text-sm text-gray-700">Ruim</span></label>
+                    <div class="flex justify-between items-center scale-1-5-container">
+                        <input type="radio" id="recepcao_agil_1" name="recepcao_agilidade" value="1" required><label for="recepcao_agil_1">1</label>
+                        <input type="radio" id="recepcao_agil_2" name="recepcao_agilidade" value="2"><label for="recepcao_agil_2">2</label>
+                        <input type="radio" id="recepcao_agil_3" name="recepcao_agilidade" value="3"><label for="recepcao_agil_3">3</label>
+                        <input type="radio" id="recepcao_agil_4" name="recepcao_agilidade" value="4"><label for="recepcao_agil_4">4</label>
+                        <input type="radio" id="recepcao_agil_5" name="recepcao_agilidade" value="5"><label for="recepcao_agil_5">5</label>
                     </div>
                 </div>
                 <!-- Clareza -->
                 <div>
                     <p class="font-medium text-gray-700 mb-2">Clareza nas informações prestadas <span class="text-red-500">*</span></p>
-                    <div class="flex flex-wrap gap-3">
-                        <label class="flex items-center"><input type="radio" name="recepcao_clareza" value="Excelente" required class="h-4 w-4 text-azul-medio focus:ring-azul-medio mr-2"><span class="text-sm text-gray-700">Excelente</span></label>
-                        <label class="flex items-center"><input type="radio" name="recepcao_clareza" value="Bom" class="h-4 w-4 text-azul-medio focus:ring-azul-medio mr-2"><span class="text-sm text-gray-700">Bom</span></label>
-                        <label class="flex items-center"><input type="radio" name="recepcao_clareza" value="Regular" class="h-4 w-4 text-azul-medio focus:ring-azul-medio mr-2"><span class="text-sm text-gray-700">Regular</span></label>
-                        <label class="flex items-center"><input type="radio" name="recepcao_clareza" value="Ruim" class="h-4 w-4 text-azul-medio focus:ring-azul-medio mr-2"><span class="text-sm text-gray-700">Ruim</span></label>
+                    <div class="flex justify-between items-center scale-1-5-container">
+                        <input type="radio" id="recepcao_clar_1" name="recepcao_clareza" value="1" required><label for="recepcao_clar_1">1</label>
+                        <input type="radio" id="recepcao_clar_2" name="recepcao_clareza" value="2"><label for="recepcao_clar_2">2</label>
+                        <input type="radio" id="recepcao_clar_3" name="recepcao_clareza" value="3"><label for="recepcao_clar_3">3</label>
+                        <input type="radio" id="recepcao_clar_4" name="recepcao_clareza" value="4"><label for="recepcao_clar_4">4</label>
+                        <input type="radio" id="recepcao_clar_5" name="recepcao_clareza" value="5"><label for="recepcao_clar_5">5</label>
                     </div>
                 </div>
             </div>
@@ -280,7 +282,17 @@
             <!-- Seção 2: Recrutamento e Seleção -->
             <div class="space-y-4 p-4 border rounded-lg">
                 <h3 class="font-semibold text-lg text-gray-800 border-b pb-2">Recrutamento e Seleção</h3>
-                <p class="text-sm text-gray-600">Avalie sua experiência com o setor (escala de 1 a 5):</p>
+                <p class="text-sm text-gray-600">Avalie sua experiência com o setor:</p>
+                <!-- Cordialidade R&S -->
+                <div>
+                    <p class="font-medium text-gray-700 mb-2">Cordialidade e simpatia no atendimento <span class="text-red-500">*</span></p>
+                    <div class="flex flex-wrap gap-3">
+                        <label class="flex items-center"><input type="radio" name="rs_cordialidade" value="Excelente" required class="h-4 w-4 text-azul-medio focus:ring-azul-medio mr-2"><span class="text-sm text-gray-700">Excelente</span></label>
+                        <label class="flex items-center"><input type="radio" name="rs_cordialidade" value="Bom" class="h-4 w-4 text-azul-medio focus:ring-azul-medio mr-2"><span class="text-sm text-gray-700">Bom</span></label>
+                        <label class="flex items-center"><input type="radio" name="rs_cordialidade" value="Regular" class="h-4 w-4 text-azul-medio focus:ring-azul-medio mr-2"><span class="text-sm text-gray-700">Regular</span></label>
+                        <label class="flex items-center"><input type="radio" name="rs_cordialidade" value="Ruim" class="h-4 w-4 text-azul-medio focus:ring-azul-medio mr-2"><span class="text-sm text-gray-700">Ruim</span></label>
+                    </div>
+                </div>
                 <!-- Profissionalismo -->
                 <div>
                     <p class="font-medium text-gray-700 mb-2">Profissionalismo e atenção dos entrevistadores <span class="text-red-500">*</span></p>
@@ -319,7 +331,17 @@
             <!-- Seção 3: Departamento Pessoal -->
             <div class="space-y-4 p-4 border rounded-lg">
                 <h3 class="font-semibold text-lg text-gray-800 border-b pb-2">Departamento Pessoal</h3>
-                <p class="text-sm text-gray-600">Avalie sua experiência com o setor (escala de 1 a 5):</p>
+                <p class="text-sm text-gray-600">Avalie sua experiência com o setor:</p>
+                 <!-- Cordialidade DP -->
+                <div>
+                    <p class="font-medium text-gray-700 mb-2">Cordialidade e simpatia no atendimento <span class="text-red-500">*</span></p>
+                    <div class="flex flex-wrap gap-3">
+                        <label class="flex items-center"><input type="radio" name="dp_cordialidade" value="Excelente" required class="h-4 w-4 text-azul-medio focus:ring-azul-medio mr-2"><span class="text-sm text-gray-700">Excelente</span></label>
+                        <label class="flex items-center"><input type="radio" name="dp_cordialidade" value="Bom" class="h-4 w-4 text-azul-medio focus:ring-azul-medio mr-2"><span class="text-sm text-gray-700">Bom</span></label>
+                        <label class="flex items-center"><input type="radio" name="dp_cordialidade" value="Regular" class="h-4 w-4 text-azul-medio focus:ring-azul-medio mr-2"><span class="text-sm text-gray-700">Regular</span></label>
+                        <label class="flex items-center"><input type="radio" name="dp_cordialidade" value="Ruim" class="h-4 w-4 text-azul-medio focus:ring-azul-medio mr-2"><span class="text-sm text-gray-700">Ruim</span></label>
+                    </div>
+                </div>
                  <!-- Clareza Docs -->
                 <div>
                     <p class="font-medium text-gray-700 mb-2">Clareza nas informações sobre documentação e prazos <span class="text-red-500">*</span></p>
@@ -572,11 +594,13 @@
                         clareza: form.querySelector('input[name="recepcao_clareza"]:checked')?.value,
                     },
                     atendimento_recrutamento: {
+                        cordialidade: form.querySelector('input[name="rs_cordialidade"]:checked')?.value,
                         profissionalismo: form.querySelector('input[name="rs_profissionalismo"]:checked')?.value,
                         clareza_orientacoes: form.querySelector('input[name="rs_clareza"]:checked')?.value,
                         agilidade_processo: form.querySelector('input[name="rs_agilidade"]:checked')?.value,
                     },
                     atendimento_dp: {
+                        cordialidade: form.querySelector('input[name="dp_cordialidade"]:checked')?.value,
                         clareza_documentacao: form.querySelector('input[name="dp_clareza"]:checked')?.value,
                         disponibilidade: form.querySelector('input[name="dp_disponibilidade"]:checked')?.value,
                         agilidade_solicitacoes: form.querySelector('input[name="dp_agilidade"]:checked')?.value,
@@ -718,18 +742,16 @@
 
             data.forEach(survey => {
                 if (survey.atendimento_recepcao) {
-                    Object.keys(questions).forEach(q => {
-                        const answer = survey.atendimento_recepcao[q];
-                        if (answer) { counts[q][answer]++; }
-                    });
+                    const answer = survey.atendimento_recepcao.cordialidade;
+                    if (answer) { counts.cordialidade[answer]++; }
                 }
             });
 
             const chartData = {
-                labels: Object.values(questions),
+                labels: ['Cordialidade e Simpatia'],
                 datasets: options.map((option, index) => ({
                     label: option,
-                    data: Object.keys(questions).map(q => counts[q][option]),
+                    data: [counts.cordialidade[option]],
                     backgroundColor: ['#22C55E', '#84CC16', '#FBBF24', '#EF4444'][index],
                     borderRadius: 4,
                 }))
@@ -771,25 +793,26 @@
 
         function renderDepartmentAvgChart(data) {
             const ctx = document.getElementById('department-avg-chart').getContext('2d');
-            const scoreMap = { 'Excelente': 4, 'Bom': 3, 'Regular': 2, 'Ruim': 1 };
+            const scoreMap = { 'Excelente': 5, 'Bom': 4, 'Regular': 3, 'Ruim': 2, 'N/A': 1 };
             const totals = { recepcao: { sum: 0, count: 0 }, rs: { sum: 0, count: 0 }, dp: { sum: 0, count: 0 } };
 
             data.forEach(s => {
                 if (s.atendimento_recepcao) {
                     Object.values(s.atendimento_recepcao).forEach(val => {
-                        if (scoreMap[val]) { totals.recepcao.sum += scoreMap[val]; totals.recepcao.count++; }
+                        const score = isNaN(val) ? (scoreMap[val] || 0) : parseInt(val, 10);
+                        if (score) { totals.recepcao.sum += score; totals.recepcao.count++; }
                     });
                 }
                 if (s.atendimento_recrutamento) {
                     Object.values(s.atendimento_recrutamento).forEach(val => {
-                        const score = parseInt(val, 10);
-                        if (!isNaN(score)) { totals.rs.sum += score; totals.rs.count++; }
+                        const score = isNaN(val) ? (scoreMap[val] || 0) : parseInt(val, 10);
+                        if (score) { totals.rs.sum += score; totals.rs.count++; }
                     });
                 }
                 if (s.atendimento_dp) {
                     Object.values(s.atendimento_dp).forEach(val => {
-                        const score = parseInt(val, 10);
-                        if (!isNaN(score)) { totals.dp.sum += score; totals.dp.count++; }
+                        const score = isNaN(val) ? (scoreMap[val] || 0) : parseInt(val, 10);
+                        if (score) { totals.dp.sum += score; totals.dp.count++; }
                     });
                 }
             });
@@ -801,9 +824,9 @@
             };
 
             const chartData = {
-                labels: ['Recepção (Média 1-4)', 'R&S (Média 1-5)', 'DP (Média 1-5)'],
+                labels: ['Recepção', 'R&S', 'DP'],
                 datasets: [{
-                    label: 'Pontuação Média',
+                    label: 'Pontuação Média (1-5)',
                     data: [avg.recepcao.toFixed(2), avg.rs.toFixed(2), avg.dp.toFixed(2)],
                     backgroundColor: ['#3b82f6', '#10b981', '#f97316'],
                     borderRadius: 4,
@@ -849,7 +872,7 @@
         }
         
         function exportToCSV(data) {
-            const headers = "Data,Gostou Mais,Melhorias,NPS,Recepção Cordialidade,Recepção Agilidade,Recepção Clareza,R&S Profissionalismo,R&S Clareza,R&S Agilidade,DP Clareza,DP Disponibilidade,DP Agilidade";
+            const headers = "Data,Gostou Mais,Melhorias,NPS,Recepção Cordialidade,Recepção Agilidade,Recepção Clareza,R&S Cordialidade,R&S Profissionalismo,R&S Clareza,R&S Agilidade,DP Cordialidade,DP Clareza,DP Disponibilidade,DP Agilidade";
             const rows = data.map(s => [
                 s.createdAt ? s.createdAt.toDate().toISOString() : '',
                 `"${s.gostou_mais?.replace(/"/g, '""')}"`,
@@ -858,9 +881,11 @@
                 s.atendimento_recepcao?.cordialidade,
                 s.atendimento_recepcao?.agilidade,
                 s.atendimento_recepcao?.clareza,
+                s.atendimento_recrutamento?.cordialidade,
                 s.atendimento_recrutamento?.profissionalismo,
                 s.atendimento_recrutamento?.clareza_orientacoes,
                 s.atendimento_recrutamento?.agilidade_processo,
+                s.atendimento_dp?.cordialidade,
                 s.atendimento_dp?.clareza_documentacao,
                 s.atendimento_dp?.disponibilidade,
                 s.atendimento_dp?.agilidade_solicitacoes,
