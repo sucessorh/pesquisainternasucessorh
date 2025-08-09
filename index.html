@@ -72,6 +72,32 @@
             border-radius: 20px;
             border: 3px solid #f1f5f9;
         }
+        
+        /* Custom Radio Button Styling for 1-5 Scale */
+        .scale-1-5-container input[type="radio"] {
+            display: none;
+        }
+        .scale-1-5-container label {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border: 2px solid #d1d5db;
+            border-radius: 50%;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s ease-in-out;
+        }
+        .scale-1-5-container input[type="radio"]:checked + label {
+            background-color: var(--azul-medio);
+            color: white;
+            border-color: var(--azul-medio);
+        }
+        .scale-1-5-container label:hover {
+            border-color: var(--azul-medio);
+        }
+
     </style>
 </head>
 <body class="antialiased">
@@ -100,7 +126,7 @@
                 <!-- LOGO ADDED HERE -->
                 <img src="https://i.postimg.cc/hGJpz4hc/Design-sem-nome-1.png" alt="Logotipo Sucesso RH" class="h-20 w-auto mx-auto mb-8">
                 
-                <h1 class="text-4xl md:text-5xl font-bold text-white">Pesquisas de Satisfação</h1>
+                <h1 class="text-4xl md:text-5xl font-bold text-white">Pesquisas de Satisfação Sucesso RH</h1>
                 <p class="text-lg md:text-xl text-white/80 mt-4 max-w-2xl mx-auto">Sua opinião constrói nosso futuro hoje e sempre!</p>
                 <div class="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
                     <button data-modal="satisfaction-modal" class="open-modal-btn w-full sm:w-auto text-lg font-semibold bg-white text-azul-medio px-8 py-3 rounded-full shadow-lg transition-transform hover:scale-105">
@@ -207,85 +233,160 @@
 
     <!-- Satisfaction Form Modal -->
     <div id="satisfaction-modal" class="hidden fixed inset-0 bg-black/60 flex items-center justify-center p-4 z-50">
-        <form id="satisfaction-form-element" class="modal-popup bg-white p-8 md:p-12 rounded-2xl shadow-xl border border-gray-100 space-y-8 w-full max-w-3xl max-h-[90vh] overflow-y-auto custom-scrollbar">
+        <form id="satisfaction-form-element" class="modal-popup bg-white p-8 md:p-10 rounded-2xl shadow-xl border border-gray-100 space-y-8 w-full max-w-3xl max-h-[90vh] overflow-y-auto custom-scrollbar">
             <div class="text-center">
                 <h2 class="text-3xl font-bold text-azul-escuro">Pesquisa de Satisfação</h2>
-                <p class="mt-2 text-gray-600 max-w-2xl mx-auto">Sua opinião é essencial! Com este formulário, queremos entender sua percepção e identificar oportunidades de melhoria.</p>
+                <p class="mt-2 text-gray-600 max-w-2xl mx-auto">Sua opinião é essencial! Queremos entender sua percepção e identificar oportunidades de melhoria.</p>
             </div>
             
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- Seção 1: Atendimento da Recepção -->
+            <div class="space-y-4 p-4 border rounded-lg">
+                <h3 class="font-semibold text-lg text-gray-800 border-b pb-2">Atendimento da Recepção</h3>
+                <p class="text-sm text-gray-600">Avalie os itens abaixo de acordo com sua experiência na recepção:</p>
+                <!-- Cordialidade -->
                 <div>
-                    <label for="satisfaction-name" class="font-semibold text-gray-700">Seu nome (opcional)</label>
-                    <input type="text" id="satisfaction-name" class="mt-1 block w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-lg focus:ring-2 focus:ring-azul-medio focus:border-azul-medio">
-                </div>
-                <div>
-                    <label for="relationship-type" class="font-semibold text-gray-700">Tipo de relação com o RH <span class="text-red-500">*</span></label>
-                    <select id="relationship-type" required class="mt-1 block w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-lg focus:ring-2 focus:ring-azul-medio focus:border-azul-medio">
-                        <option value="">Selecione...</option>
-                        <option>Colaborador Interno</option>
-                        <option>Candidato a Vaga</option>
-                        <option>Parceiro</option>
-                        <option>Cliente</option>
-                        <option>Visitante</option>
-                    </select>
-                </div>
-                <div class="md:col-span-2">
-                    <label for="service-used" class="font-semibold text-gray-700">Serviço/produto utilizado <span class="text-red-500">*</span></label>
-                    <select id="service-used" required class="mt-1 block w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-lg focus:ring-2 focus:ring-azul-medio focus:border-azul-medio">
-                        <option value="">Selecione...</option>
-                        <option>Atendimento Presencial</option>
-                        <option>Atendimento Online</option>
-                        <option>Processo Seletivo</option>
-                        <option>Consultoria</option>
-                        <option>Treinamento</option>
-                        <option>Evento</option>
-                    </select>
-                </div>
-            </div>
-
-            <div class="space-y-6">
-                <div>
-                    <p class="font-semibold text-gray-700">Avaliação do atendimento recebido <span class="text-red-500">*</span></p>
-                    <div class="mt-2 grid grid-cols-2 md:grid-cols-4 gap-3">
-                        <label class="flex items-center p-3 border border-gray-200 rounded-lg hover:bg-azul-claro cursor-pointer"><input type="radio" name="atendimento" value="Muito Satisfeito" required class="h-4 w-4 text-azul-medio focus:ring-azul-medio mr-3"><span class="text-sm text-gray-700">Muito Satisfeito</span></label>
-                        <label class="flex items-center p-3 border border-gray-200 rounded-lg hover:bg-azul-claro cursor-pointer"><input type="radio" name="atendimento" value="Satisfeito" class="h-4 w-4 text-azul-medio focus:ring-azul-medio mr-3"><span class="text-sm text-gray-700">Satisfeito</span></label>
-                        <label class="flex items-center p-3 border border-gray-200 rounded-lg hover:bg-azul-claro cursor-pointer"><input type="radio" name="atendimento" value="Pouco Satisfeito" class="h-4 w-4 text-azul-medio focus:ring-azul-medio mr-3"><span class="text-sm text-gray-700">Pouco Satisfeito</span></label>
-                        <label class="flex items-center p-3 border border-gray-200 rounded-lg hover:bg-azul-claro cursor-pointer"><input type="radio" name="atendimento" value="Insatisfeito" class="h-4 w-4 text-azul-medio focus:ring-azul-medio mr-3"><span class="text-sm text-gray-700">Insatisfeito</span></label>
+                    <p class="font-medium text-gray-700 mb-2">Cordialidade e simpatia no atendimento <span class="text-red-500">*</span></p>
+                    <div class="flex flex-wrap gap-3">
+                        <label class="flex items-center"><input type="radio" name="recepcao_cordialidade" value="Excelente" required class="h-4 w-4 text-azul-medio focus:ring-azul-medio mr-2"><span class="text-sm text-gray-700">Excelente</span></label>
+                        <label class="flex items-center"><input type="radio" name="recepcao_cordialidade" value="Bom" class="h-4 w-4 text-azul-medio focus:ring-azul-medio mr-2"><span class="text-sm text-gray-700">Bom</span></label>
+                        <label class="flex items-center"><input type="radio" name="recepcao_cordialidade" value="Regular" class="h-4 w-4 text-azul-medio focus:ring-azul-medio mr-2"><span class="text-sm text-gray-700">Regular</span></label>
+                        <label class="flex items-center"><input type="radio" name="recepcao_cordialidade" value="Ruim" class="h-4 w-4 text-azul-medio focus:ring-azul-medio mr-2"><span class="text-sm text-gray-700">Ruim</span></label>
                     </div>
                 </div>
+                <!-- Agilidade -->
                 <div>
-                    <p class="font-semibold text-gray-700">O prazo de atendimento foi cumprido? <span class="text-red-500">*</span></p>
-                    <div class="mt-2 grid grid-cols-2 md:grid-cols-3 gap-3">
-                        <label class="flex items-center p-3 border border-gray-200 rounded-lg hover:bg-azul-claro cursor-pointer"><input type="radio" name="prazo" value="Sim" required class="h-4 w-4 text-azul-medio focus:ring-azul-medio mr-3"><span class="text-sm text-gray-700">Sim</span></label>
-                        <label class="flex items-center p-3 border border-gray-200 rounded-lg hover:bg-azul-claro cursor-pointer"><input type="radio" name="prazo" value="Parcialmente" class="h-4 w-4 text-azul-medio focus:ring-azul-medio mr-3"><span class="text-sm text-gray-700">Parcialmente</span></label>
-                        <label class="flex items-center p-3 border border-gray-200 rounded-lg hover:bg-azul-claro cursor-pointer"><input type="radio" name="prazo" value="Não" class="h-4 w-4 text-azul-medio focus:ring-azul-medio mr-3"><span class="text-sm text-gray-700">Não</span></label>
+                    <p class="font-medium text-gray-700 mb-2">Agilidade no atendimento <span class="text-red-500">*</span></p>
+                    <div class="flex flex-wrap gap-3">
+                        <label class="flex items-center"><input type="radio" name="recepcao_agilidade" value="Excelente" required class="h-4 w-4 text-azul-medio focus:ring-azul-medio mr-2"><span class="text-sm text-gray-700">Excelente</span></label>
+                        <label class="flex items-center"><input type="radio" name="recepcao_agilidade" value="Bom" class="h-4 w-4 text-azul-medio focus:ring-azul-medio mr-2"><span class="text-sm text-gray-700">Bom</span></label>
+                        <label class="flex items-center"><input type="radio" name="recepcao_agilidade" value="Regular" class="h-4 w-4 text-azul-medio focus:ring-azul-medio mr-2"><span class="text-sm text-gray-700">Regular</span></label>
+                        <label class="flex items-center"><input type="radio" name="recepcao_agilidade" value="Ruim" class="h-4 w-4 text-azul-medio focus:ring-azul-medio mr-2"><span class="text-sm text-gray-700">Ruim</span></label>
                     </div>
                 </div>
+                <!-- Clareza -->
                 <div>
-                    <p class="font-semibold text-gray-700">O atendimento atendeu às suas expectativas? <span class="text-red-500">*</span></p>
-                    <div class="mt-2 grid grid-cols-2 md:grid-cols-4 gap-3">
-                        <label class="flex items-center p-3 border border-gray-200 rounded-lg hover:bg-azul-claro cursor-pointer"><input type="radio" name="expectativas" value="Superou" required class="h-4 w-4 text-azul-medio focus:ring-azul-medio mr-3"><span class="text-sm text-gray-700">Superou</span></label>
-                        <label class="flex items-center p-3 border border-gray-200 rounded-lg hover:bg-azul-claro cursor-pointer"><input type="radio" name="expectativas" value="Atendeu Plenamente" class="h-4 w-4 text-azul-medio focus:ring-azul-medio mr-3"><span class="text-sm text-gray-700">Atendeu Plenamente</span></label>
-                        <label class="flex items-center p-3 border border-gray-200 rounded-lg hover:bg-azul-claro cursor-pointer"><input type="radio" name="expectativas" value="Atendeu Parcialmente" class="h-4 w-4 text-azul-medio focus:ring-azul-medio mr-3"><span class="text-sm text-gray-700">Atendeu Parcialmente</span></label>
-                        <label class="flex items-center p-3 border border-gray-200 rounded-lg hover:bg-azul-claro cursor-pointer"><input type="radio" name="expectativas" value="Não Atendeu" class="h-4 w-4 text-azul-medio focus:ring-azul-medio mr-3"><span class="text-sm text-gray-700">Não Atendeu</span></label>
-                    </div>
-                </div>
-                <div>
-                    <p class="font-semibold text-gray-700">Você recomendaria o Sucesso RH? <span class="text-red-500">*</span></p>
-                    <div class="mt-2 grid grid-cols-2 md:grid-cols-3 gap-3">
-                        <label class="flex items-center p-3 border border-gray-200 rounded-lg hover:bg-azul-claro cursor-pointer"><input type="radio" name="recomendaria" value="Sim" required class="h-4 w-4 text-azul-medio focus:ring-azul-medio mr-3"><span class="text-sm text-gray-700">Sim</span></label>
-                        <label class="flex items-center p-3 border border-gray-200 rounded-lg hover:bg-azul-claro cursor-pointer"><input type="radio" name="recomendaria" value="Talvez" class="h-4 w-4 text-azul-medio focus:ring-azul-medio mr-3"><span class="text-sm text-gray-700">Talvez</span></label>
-                        <label class="flex items-center p-3 border border-gray-200 rounded-lg hover:bg-azul-claro cursor-pointer"><input type="radio" name="recomendaria" value="Não" class="h-4 w-4 text-azul-medio focus:ring-azul-medio mr-3"><span class="text-sm text-gray-700">Não</span></label>
+                    <p class="font-medium text-gray-700 mb-2">Clareza nas informações prestadas <span class="text-red-500">*</span></p>
+                    <div class="flex flex-wrap gap-3">
+                        <label class="flex items-center"><input type="radio" name="recepcao_clareza" value="Excelente" required class="h-4 w-4 text-azul-medio focus:ring-azul-medio mr-2"><span class="text-sm text-gray-700">Excelente</span></label>
+                        <label class="flex items-center"><input type="radio" name="recepcao_clareza" value="Bom" class="h-4 w-4 text-azul-medio focus:ring-azul-medio mr-2"><span class="text-sm text-gray-700">Bom</span></label>
+                        <label class="flex items-center"><input type="radio" name="recepcao_clareza" value="Regular" class="h-4 w-4 text-azul-medio focus:ring-azul-medio mr-2"><span class="text-sm text-gray-700">Regular</span></label>
+                        <label class="flex items-center"><input type="radio" name="recepcao_clareza" value="Ruim" class="h-4 w-4 text-azul-medio focus:ring-azul-medio mr-2"><span class="text-sm text-gray-700">Ruim</span></label>
                     </div>
                 </div>
             </div>
 
-            <div>
-                <label for="comments" class="font-semibold text-gray-700">Comentários ou sugestões</label>
-                <textarea id="comments" rows="4" class="mt-1 block w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-lg focus:ring-2 focus:ring-azul-medio focus:border-azul-medio"></textarea>
+            <!-- Seção 2: Recrutamento e Seleção -->
+            <div class="space-y-4 p-4 border rounded-lg">
+                <h3 class="font-semibold text-lg text-gray-800 border-b pb-2">Recrutamento e Seleção</h3>
+                <p class="text-sm text-gray-600">Avalie sua experiência com o setor (escala de 1 a 5):</p>
+                <!-- Profissionalismo -->
+                <div>
+                    <p class="font-medium text-gray-700 mb-2">Profissionalismo e atenção dos entrevistadores <span class="text-red-500">*</span></p>
+                    <div class="flex justify-between items-center scale-1-5-container">
+                        <input type="radio" id="rs_prof_1" name="rs_profissionalismo" value="1" required><label for="rs_prof_1">1</label>
+                        <input type="radio" id="rs_prof_2" name="rs_profissionalismo" value="2"><label for="rs_prof_2">2</label>
+                        <input type="radio" id="rs_prof_3" name="rs_profissionalismo" value="3"><label for="rs_prof_3">3</label>
+                        <input type="radio" id="rs_prof_4" name="rs_profissionalismo" value="4"><label for="rs_prof_4">4</label>
+                        <input type="radio" id="rs_prof_5" name="rs_profissionalismo" value="5"><label for="rs_prof_5">5</label>
+                    </div>
+                </div>
+                <!-- Clareza Orientações -->
+                <div>
+                    <p class="font-medium text-gray-700 mb-2">Clareza nas orientações sobre as etapas do processo <span class="text-red-500">*</span></p>
+                    <div class="flex justify-between items-center scale-1-5-container">
+                        <input type="radio" id="rs_clar_1" name="rs_clareza" value="1" required><label for="rs_clar_1">1</label>
+                        <input type="radio" id="rs_clar_2" name="rs_clareza" value="2"><label for="rs_clar_2">2</label>
+                        <input type="radio" id="rs_clar_3" name="rs_clareza" value="3"><label for="rs_clar_3">3</label>
+                        <input type="radio" id="rs_clar_4" name="rs_clareza" value="4"><label for="rs_clar_4">4</label>
+                        <input type="radio" id="rs_clar_5" name="rs_clareza" value="5"><label for="rs_clar_5">5</label>
+                    </div>
+                </div>
+                <!-- Agilidade Processo -->
+                <div>
+                    <p class="font-medium text-gray-700 mb-2">Agilidade na condução do processo seletivo <span class="text-red-500">*</span></p>
+                    <div class="flex justify-between items-center scale-1-5-container">
+                        <input type="radio" id="rs_agil_1" name="rs_agilidade" value="1" required><label for="rs_agil_1">1</label>
+                        <input type="radio" id="rs_agil_2" name="rs_agilidade" value="2"><label for="rs_agil_2">2</label>
+                        <input type="radio" id="rs_agil_3" name="rs_agilidade" value="3"><label for="rs_agil_3">3</label>
+                        <input type="radio" id="rs_agil_4" name="rs_agilidade" value="4"><label for="rs_agil_4">4</label>
+                        <input type="radio" id="rs_agil_5" name="rs_agilidade" value="5"><label for="rs_agil_5">5</label>
+                    </div>
+                </div>
             </div>
             
-            <div class="flex justify-end gap-4 items-center pt-4 border-t border-gray-200">
+            <!-- Seção 3: Departamento Pessoal -->
+            <div class="space-y-4 p-4 border rounded-lg">
+                <h3 class="font-semibold text-lg text-gray-800 border-b pb-2">Departamento Pessoal</h3>
+                <p class="text-sm text-gray-600">Avalie sua experiência com o setor (escala de 1 a 5):</p>
+                 <!-- Clareza Docs -->
+                <div>
+                    <p class="font-medium text-gray-700 mb-2">Clareza nas informações sobre documentação e prazos <span class="text-red-500">*</span></p>
+                    <div class="flex justify-between items-center scale-1-5-container">
+                        <input type="radio" id="dp_clar_1" name="dp_clareza" value="1" required><label for="dp_clar_1">1</label>
+                        <input type="radio" id="dp_clar_2" name="dp_clareza" value="2"><label for="dp_clar_2">2</label>
+                        <input type="radio" id="dp_clar_3" name="dp_clareza" value="3"><label for="dp_clar_3">3</label>
+                        <input type="radio" id="dp_clar_4" name="dp_clareza" value="4"><label for="dp_clar_4">4</label>
+                        <input type="radio" id="dp_clar_5" name="dp_clareza" value="5"><label for="dp_clar_5">5</label>
+                    </div>
+                </div>
+                <!-- Disponibilidade -->
+                <div>
+                    <p class="font-medium text-gray-700 mb-2">Disponibilidade para esclarecer dúvidas <span class="text-red-500">*</span></p>
+                    <div class="flex justify-between items-center scale-1-5-container">
+                        <input type="radio" id="dp_disp_1" name="dp_disponibilidade" value="1" required><label for="dp_disp_1">1</label>
+                        <input type="radio" id="dp_disp_2" name="dp_disponibilidade" value="2"><label for="dp_disp_2">2</label>
+                        <input type="radio" id="dp_disp_3" name="dp_disponibilidade" value="3"><label for="dp_disp_3">3</label>
+                        <input type="radio" id="dp_disp_4" name="dp_disponibilidade" value="4"><label for="dp_disp_4">4</label>
+                        <input type="radio" id="dp_disp_5" name="dp_disponibilidade" value="5"><label for="dp_disp_5">5</label>
+                    </div>
+                </div>
+                <!-- Agilidade Soluções -->
+                <div>
+                    <p class="font-medium text-gray-700 mb-2">Agilidade na solução de solicitações <span class="text-red-500">*</span></p>
+                    <div class="flex justify-between items-center scale-1-5-container">
+                        <input type="radio" id="dp_agil_1" name="dp_agilidade" value="1" required><label for="dp_agil_1">1</label>
+                        <input type="radio" id="dp_agil_2" name="dp_agilidade" value="2"><label for="dp_agil_2">2</label>
+                        <input type="radio" id="dp_agil_3" name="dp_agilidade" value="3"><label for="dp_agil_3">3</label>
+                        <input type="radio" id="dp_agil_4" name="dp_agilidade" value="4"><label for="dp_agil_4">4</label>
+                        <input type="radio" id="dp_agil_5" name="dp_agilidade" value="5"><label for="dp_agil_5">5</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Seção 4: Experiência Geral (NPS) -->
+            <div class="p-4 border rounded-lg">
+                <label for="nps_score" class="font-semibold text-lg text-gray-800 block mb-2">Experiência Geral</label>
+                <p class="text-sm text-gray-600 mb-2">Em uma escala de 0 (Nada provável) a 10 (Muito provável), qual a probabilidade de você recomendar nossa empresa? <span class="text-red-500">*</span></p>
+                <select id="nps_score" name="nps_score" required class="mt-1 block w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-lg focus:ring-2 focus:ring-azul-medio focus:border-azul-medio">
+                    <option value="">Selecione uma nota...</option>
+                    <option value="0">0</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                </select>
+            </div>
+            
+            <!-- Seção 5: Comentários Finais -->
+            <div class="space-y-4 p-4 border rounded-lg">
+                <h3 class="font-semibold text-lg text-gray-800 border-b pb-2">Comentários Finais</h3>
+                <div>
+                    <label for="comments_liked" class="font-medium text-gray-700">O que você mais gostou no atendimento?</label>
+                    <textarea id="comments_liked" rows="3" class="mt-1 block w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-lg focus:ring-2 focus:ring-azul-medio focus:border-azul-medio"></textarea>
+                </div>
+                 <div>
+                    <label for="comments_improve" class="font-medium text-gray-700">O que podemos melhorar?</label>
+                    <textarea id="comments_improve" rows="3" class="mt-1 block w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-lg focus:ring-2 focus:ring-azul-medio focus:border-azul-medio"></textarea>
+                </div>
+            </div>
+            
+            <div class="flex justify-end gap-4 items-center pt-6 border-t border-gray-200">
                 <button type="button" class="close-modal-btn font-semibold text-gray-600 hover:text-gray-900">Cancelar</button>
                 <button type="submit" class="text-lg font-semibold bg-azul-medio text-white px-8 py-2 rounded-full shadow-lg transition-transform hover:scale-105 disabled:opacity-50 disabled:cursor-wait flex items-center justify-center gap-2">
                     <span class="spinner hidden w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
@@ -463,14 +564,24 @@
             if (form.id === 'satisfaction-form-element') {
                 formData = {
                     ...formData,
-                    nome: form.querySelector('#satisfaction-name').value.trim() || "Anônimo",
-                    tipo_relacao: form.querySelector('#relationship-type').value,
-                    servico_utilizado: form.querySelector('#service-used').value,
-                    avaliacao_atendimento: form.querySelector('input[name="atendimento"]:checked').value,
-                    prazo_atendimento: form.querySelector('input[name="prazo"]:checked').value,
-                    atendeu_expectativas: form.querySelector('input[name="expectativas"]:checked').value,
-                    recomendaria_rh: form.querySelector('input[name="recomendaria"]:checked').value,
-                    comentarios: form.querySelector('#comments').value.trim(),
+                    atendimento_recepcao: {
+                        cordialidade: form.querySelector('input[name="recepcao_cordialidade"]:checked')?.value,
+                        agilidade: form.querySelector('input[name="recepcao_agilidade"]:checked')?.value,
+                        clareza: form.querySelector('input[name="recepcao_clareza"]:checked')?.value,
+                    },
+                    atendimento_recrutamento: {
+                        profissionalismo: form.querySelector('input[name="rs_profissionalismo"]:checked')?.value,
+                        clareza_orientacoes: form.querySelector('input[name="rs_clareza"]:checked')?.value,
+                        agilidade_processo: form.querySelector('input[name="rs_agilidade"]:checked')?.value,
+                    },
+                    atendimento_dp: {
+                        clareza_documentacao: form.querySelector('input[name="dp_clareza"]:checked')?.value,
+                        disponibilidade: form.querySelector('input[name="dp_disponibilidade"]:checked')?.value,
+                        agilidade_solicitacoes: form.querySelector('input[name="dp_agilidade"]:checked')?.value,
+                    },
+                    nps: form.querySelector('#nps_score').value,
+                    gostou_mais: form.querySelector('#comments_liked').value.trim(),
+                    melhorias: form.querySelector('#comments_improve').value.trim(),
                 };
             } else {
                 formData = {
@@ -508,6 +619,7 @@
 
 
         // --- Admin Logic ---
+        // NOTE: The dashboard charts will need to be updated to reflect the new data structure from the satisfaction form.
         let allSurveys = [];
         let allPraises = [];
         let chartInstances = {};
@@ -516,7 +628,6 @@
             e.preventDefault();
             const password = document.getElementById('admin-password').value;
             const errorMsg = document.getElementById('admin-error');
-            // IMPORTANT: Use Firebase Auth for real applications. This is for demonstration.
             if (password === 'SucessoRH@2024') {
                 publicView.classList.add('hidden');
                 adminDashboard.classList.remove('hidden');
@@ -538,7 +649,6 @@
         function initializeDashboard() {
             if (!isConfigured) return;
             
-            // Listeners for real-time data
             onSnapshot(collection(db, "pesquisa_satisfacao"), (snapshot) => {
                 allSurveys = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
                 updateDashboard(allSurveys, allPraises);
@@ -548,7 +658,6 @@
                 updateDashboard(allSurveys, allPraises);
             });
 
-            // Filter and search listeners
             document.getElementById('filter-btn').addEventListener('click', applyFilters);
             document.getElementById('search-comments').addEventListener('input', (e) => updateDashboard(filterData(allSurveys, e.target.value), allPraises));
             document.getElementById('search-praises').addEventListener('input', (e) => updateDashboard(allSurveys, filterData(allPraises, e.target.value, 'colaborador_elogiado')));
@@ -565,7 +674,7 @@
 
             const surveySnapshot = await getDocs(surveysQuery);
             const filteredSurveys = surveySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-            updateDashboard(filteredSurveys, allPraises); // For now, praises are not date-filtered
+            updateDashboard(filteredSurveys, allPraises);
         }
 
         function filterData(data, searchTerm, key = 'comentarios') {
@@ -575,90 +684,27 @@
 
         function updateDashboard(surveys, praises) {
             if (adminDashboard.classList.contains('hidden')) return;
-
-            // Destroy old charts
             Object.values(chartInstances).forEach(chart => chart.destroy());
-
-            // Render new charts
-            renderSatisfactionChart(surveys);
-            renderRecommendationChart(surveys);
-            renderServicesChart(surveys);
-            
-            // Render tables and lists
+            // The following chart functions need to be updated to work with the new data structure
+            // renderSatisfactionChart(surveys); 
+            // renderRecommendationChart(surveys);
+            // renderServicesChart(surveys);
             renderCommentsTable(surveys);
             renderPraisesList(praises);
         }
 
         const createChart = (ctx, type, data, options) => new Chart(ctx, { type, data, options });
-
-        function renderSatisfactionChart(data) {
-            const ctx = document.getElementById('satisfaction-chart').getContext('2d');
-            const counts = data.reduce((acc, survey) => {
-                const key = survey.avaliacao_atendimento;
-                acc[key] = (acc[key] || 0) + 1;
-                return acc;
-            }, {});
-            const chartData = {
-                labels: ['Muito Satisfeito', 'Satisfeito', 'Pouco Satisfeito', 'Insatisfeito'],
-                datasets: [{
-                    label: 'Avaliações',
-                    data: [counts['Muito Satisfeito']||0, counts['Satisfeito']||0, counts['Pouco Satisfeito']||0, counts['Insatisfeito']||0],
-                    backgroundColor: ['#22C55E', '#84CC16', '#FBBF24', '#EF4444'],
-                    borderRadius: 8,
-                }]
-            };
-            chartInstances.satisfaction = createChart(ctx, 'bar', chartData, { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } });
-        }
-
-        function renderRecommendationChart(data) {
-            const ctx = document.getElementById('recommendation-chart').getContext('2d');
-            const counts = data.reduce((acc, survey) => {
-                const key = survey.recomendaria_rh;
-                acc[key] = (acc[key] || 0) + 1;
-                return acc;
-            }, {});
-            const chartData = {
-                labels: ['Sim', 'Talvez', 'Não'],
-                datasets: [{
-                    data: [counts['Sim']||0, counts['Talvez']||0, counts['Não']||0],
-                    backgroundColor: ['#22C55E', '#FBBF24', '#EF4444'],
-                    borderColor: '#fff',
-                    borderWidth: 2,
-                }]
-            };
-            chartInstances.recommendation = createChart(ctx, 'pie', chartData, { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom' } } });
-        }
-
-        function renderServicesChart(data) {
-            const ctx = document.getElementById('services-chart').getContext('2d');
-            const counts = data.reduce((acc, survey) => {
-                const key = survey.servico_utilizado;
-                acc[key] = (acc[key] || 0) + 1;
-                return acc;
-            }, {});
-            const chartData = {
-                labels: Object.keys(counts),
-                datasets: [{
-                    label: 'Nº de Avaliações',
-                    data: Object.values(counts),
-                    backgroundColor: '#266EDB',
-                    borderRadius: 8,
-                }]
-            };
-            chartInstances.services = createChart(ctx, 'bar', chartData, { indexAxis: 'y', responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } });
-        }
         
         function renderCommentsTable(surveys) {
             const tbody = document.getElementById('comments-table-body');
             tbody.innerHTML = surveys
-                .filter(s => s.comentarios)
+                .filter(s => s.gostou_mais || s.melhorias)
                 .sort((a,b) => b.createdAt?.toMillis() - a.createdAt?.toMillis())
                 .map(s => `
                 <tr class="bg-white border-b">
                     <td class="px-6 py-4">${s.createdAt ? s.createdAt.toDate().toLocaleDateString('pt-BR') : 'N/A'}</td>
-                    <td class="px-6 py-4">${s.tipo_relacao}</td>
-                    <td class="px-6 py-4">${s.servico_utilizado}</td>
-                    <td class="px-6 py-4">${s.comentarios}</td>
+                    <td class="px-6 py-4">${s.gostou_mais || 'N/A'}</td>
+                    <td class="px-6 py-4">${s.melhorias || 'N/A'}</td>
                 </tr>
             `).join('');
         }
@@ -680,17 +726,21 @@
         }
         
         function exportToCSV(data) {
-            const headers = "Data,Nome,Tipo Relação,Serviço,Avaliação Atendimento,Prazo Cumprido,Atendeu Expectativas,Recomendaria,Comentários";
+            const headers = "Data,Gostou Mais,Melhorias,NPS,Recepção Cordialidade,Recepção Agilidade,Recepção Clareza,R&S Profissionalismo,R&S Clareza,R&S Agilidade,DP Clareza,DP Disponibilidade,DP Agilidade";
             const rows = data.map(s => [
                 s.createdAt ? s.createdAt.toDate().toISOString() : '',
-                `"${s.nome}"`,
-                `"${s.tipo_relacao}"`,
-                `"${s.servico_utilizado}"`,
-                `"${s.avaliacao_atendimento}"`,
-                `"${s.prazo_atendimento}"`,
-                `"${s.atendeu_expectativas}"`,
-                `"${s.recomendaria_rh}"`,
-                `"${s.comentarios.replace(/"/g, '""')}"`
+                `"${s.gostou_mais?.replace(/"/g, '""')}"`,
+                `"${s.melhorias?.replace(/"/g, '""')}"`,
+                s.nps,
+                s.atendimento_recepcao?.cordialidade,
+                s.atendimento_recepcao?.agilidade,
+                s.atendimento_recepcao?.clareza,
+                s.atendimento_recrutamento?.profissionalismo,
+                s.atendimento_recrutamento?.clareza_orientacoes,
+                s.atendimento_recrutamento?.agilidade_processo,
+                s.atendimento_dp?.clareza_documentacao,
+                s.atendimento_dp?.disponibilidade,
+                s.atendimento_dp?.agilidade_solicitacoes,
             ].join(','));
             
             const csvContent = "data:text/csv;charset=utf-8," + headers + "\n" + rows.join("\n");
@@ -706,4 +756,3 @@
     </script>
 </body>
 </html>
-
